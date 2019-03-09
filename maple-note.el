@@ -83,7 +83,7 @@
      :template "Title: %s
 Author: honmaple
 Date: %s
-Modified:
+Modified: %s
 Category:
 Tags:
 Slug: %s
@@ -95,7 +95,7 @@ Summary: ")
 #+AUTHOR: honmaple
 #+DATE: %s
 #+CATEGORY:
-#+PROPERTY: MODIFIED
+#+PROPERTY: MODIFIED %s
 #+PROPERTY: TAGS
 #+PROPERTY: SLUG %s
 #+PROPERTY: SUMMARY "))
@@ -240,12 +240,12 @@ Summary: ")
 (defun maple-note-create (filename)
   "New note with FILENAME."
   (interactive "sNote's filename(new-note.org, new-note.md etc):")
-  (let ((info (maple-note--info filename)))
+  (let ((info (maple-note--info filename))
+        (time (format-time-string "%F %T" (current-time))))
     (if (not info) (message "Unsupported file extension!")
       (find-file (expand-file-name filename (maple-note--abspath maple-note-draft-path)))
       (insert (format (plist-get info :template)
-                      (file-name-base filename)
-                      (format-time-string "%F %T" (current-time))
+                      (file-name-base filename) time time
                       (file-name-base filename))))))
 
 (defun maple-note-delete ()
@@ -318,7 +318,8 @@ Summary: ")
   (maple-note-init)
   (maple-note-refresh))
 
-(defun maple-note-start()
+;;;###autoload
+(defun maple-note()
   "Start note."
   (interactive)
   (maple-note--with-buffer (maple-note-mode))

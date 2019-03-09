@@ -1,1 +1,9 @@
 * emacs-maple-note
+  #+begin_src elisp
+    (use-package maple-note
+      :ensure nil
+      :commands maple-note
+      :config
+      (setq maple-note-root-path "~/git/pelican"
+            maple-note-draft-path "content/draft"))
+  #+end_src
