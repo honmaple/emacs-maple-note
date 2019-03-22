@@ -1,6 +1,6 @@
 ;;; maple-note-mode.el ---  note mode configuration.	-*- lexical-binding: t -*-
 
-;; Copyright (C) 2015-2019 lin.jiang
+;; Copyright (C) 2019 lin.jiang
 
 ;; Author: lin.jiang <mail@honmaple.com>
 ;; URL: https://github.com/honmaple/emacs-maple-note
@@ -294,20 +294,23 @@ Summary: ")
     (tabulated-list-init-header)))
 
 (defvar maple-note-mode-map
-  (let ((map (make-sparse-keymap)))
+  (let ((map (make-sparse-keymap))
+        (keymap '(("q" . quit-window)
+                  ("r" . maple-note-refresh)
+                  ("s" . maple-note-publish-or-unpublish)
+                  ("D" . maple-note-delete)
+                  ("w" . maple-note-create)
+                  ("f" . maple-note-filter)
+                  ("G" . end-of-buffer)
+                  ("l" . forward-char)
+                  ("h" . backward-char)
+                  ("A" . end-of-line)
+                  ("I" . beginning-of-line)
+                  ("gg" . beginning-of-buffer))))
     (set-keymap-parent map tabulated-list-mode-map)
-    (define-key map "q" 'quit-window)
-    (define-key map "r" 'maple-note-refresh)
-    (define-key map "s" 'maple-note-publish-or-unpublish)
-    (define-key map "D" 'maple-note-delete)
-    (define-key map "w" 'maple-note-create)
-    (define-key map "f" 'maple-note-filter)
-    (define-key map "gg" 'beginning-of-buffer)
-    (define-key map "G" 'end-of-buffer)
-    (define-key map "l" 'forward-char)
-    (define-key map "h" 'backward-char)
-    (define-key map "A" 'end-of-line)
-    (define-key map "I" 'beginning-of-line)
+    (dolist (key keymap)
+      (define-key map (car key) (cdr key))
+      (define-key map (concat "?" (car key)) (cdr key)))
     map)
   "Maple note mode map.")
 
