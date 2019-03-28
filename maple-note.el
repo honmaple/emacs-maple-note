@@ -212,13 +212,13 @@ Summary: ")
 
 (defun maple-note--is-draft (path)
   "Check PATH is in drafts."
-  (s-starts-with?
+  (string-prefix-p
    (maple-note--abspath maple-note-draft-path) path))
 
 (defun maple-note--abspath (path)
   "Return full absolute path base on PATH."
-  (expand-file-name
-   (concat (file-name-as-directory maple-note-root-path) path)))
+  (if (file-name-absolute-p path) path
+    (expand-file-name path (file-name-as-directory maple-note-root-path))))
 
 (defun maple-note-publish-or-unpublish ()
   "Switch between publish and draft."
@@ -266,19 +266,19 @@ Summary: ")
   "Refresh with &optional KEYWORD REMEMBER-POS UPDATE."
   (interactive)
   (maple-note--with-buffer
-    (let ((notes (mapcar 'maple-note--entry (maple-note--files)))
-          (filter-keyword (or keyword maple-note-filter-keyword)))
-      (when filter-keyword
-        (setq notes (cl-remove-if-not
-                     (lambda (x)
-                       (let* ((row (append (car (cdr x)) nil))
-                              (title (car (nth 1 row)))
-                              (category (car (nth 3 row))))
-                         (s-contains? keyword (mapconcat #'identity (list title category) "|") t)))
-                     notes)))
-      (setq tabulated-list-sort-key maple-note-sort-key)
-      (setq tabulated-list-entries notes)
-      (tabulated-list-print remember-pos update))))
+   (let ((notes (mapcar 'maple-note--entry (maple-note--files)))
+         (filter-keyword (or keyword maple-note-filter-keyword)))
+     (when filter-keyword
+       (setq notes (cl-remove-if-not
+                    (lambda (x)
+                      (let* ((row (append (car (cdr x)) nil))
+                             (title (car (nth 1 row)))
+                             (category (car (nth 3 row))))
+                        (s-contains? keyword (mapconcat #'identity (list title category) "|") t)))
+                    notes)))
+     (setq tabulated-list-sort-key maple-note-sort-key)
+     (setq tabulated-list-entries notes)
+     (tabulated-list-print remember-pos update))))
 
 (defun maple-note-filter()
   "Filter notes."
@@ -288,10 +288,10 @@ Summary: ")
 (defun maple-note-init()
   "Init notes."
   (maple-note--with-buffer
-    (dolist (arg maple-note-alist)
-      (add-to-list 'maple-note-path (plist-get (cdr arg) :path)))
-    (setq tabulated-list-format maple-note-header)
-    (tabulated-list-init-header)))
+   (dolist (arg maple-note-alist)
+     (add-to-list 'maple-note-path (plist-get (cdr arg) :path)))
+   (setq tabulated-list-format maple-note-header)
+   (tabulated-list-init-header)))
 
 (defvar maple-note-mode-map
   (let ((map (make-sparse-keymap))
