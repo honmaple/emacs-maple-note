@@ -1,4 +1,4 @@
-;;; maple-note-mode.el ---  note mode configuration.	-*- lexical-binding: t -*-
+;;; maple-note.el ---  maple note configuration.	-*- lexical-binding: t -*-
 
 ;; Copyright (C) 2019 lin.jiang
 
