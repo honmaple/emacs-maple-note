@@ -1,9 +1,50 @@
 * emacs-maple-note
-  #+begin_src elisp
-    (use-package maple-note
-      :ensure nil
-      :commands maple-note
-      :config
-      (setq maple-note-root-path "~/git/pelican"
-            maple-note-draft-path "content/draft"))
-  #+end_src
+  My pelican blog management base on tabulated-list like `list-packages`
+
+** screenshot
+   [[https://github.com/honmaple/emacs-maple-note/blob/master/screenshot/example.png]]
+   
+** quickstart
+   #+begin_src elisp
+     (use-package maple-note
+       :quelpa (:fetcher github :repo "honmaple/emacs-maple-note")
+       :commands (maple-note)
+       :config
+       (setq maple-note-root-path "~/git/pelican"
+             maple-note-draft-path "content/draft"))
+   #+end_src
+
+   Or alternatively, you can download the repository and install manually by doing:
+   #+BEGIN_SRC sehll
+   git clone https://github.com/honmaple/emacs-maple-note ~/.emacs.d/site-lisp/maple-note
+   #+END_SRC
+
+   #+begin_src elisp
+     (use-package maple-note
+       :ensure nil
+       :commands (maple-note))
+   #+end_src
+   
+** customize
+   #+begin_src elisp
+     (setq maple-note-sort-key '("DATE" . t))
+     (setq maple-note-root-path "~/git/pelican")
+     (setq maple-note-draft-path "content/draft")
+   #+end_src
+   
+** keybinds and commands
+   #+begin_src elisp
+     (keymap '(("q" . quit-window)
+               ("r" . maple-note-refresh)
+               ("s" . maple-note-publish-or-unpublish)
+               ("D" . maple-note-delete)
+               ("w" . maple-note-create)
+               ("f" . maple-note-filter)
+               ("G" . end-of-buffer)
+               ("l" . forward-char)
+               ("h" . backward-char)
+               ("A" . end-of-line)
+               ("I" . beginning-of-line)
+               ("gg" . beginning-of-buffer)))
+   #+end_src
+
