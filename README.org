@@ -10,8 +10,7 @@
        :quelpa (:fetcher github :repo "honmaple/emacs-maple-note")
        :commands (maple-note)
        :config
-       (setq maple-note-root-path "~/git/pelican"
-             maple-note-draft-path "content/draft"))
+       (setq maple-note-base-directory "~/Git/pelican/content"))
    #+end_src
 
    Or alternatively, you can download the repository and install manually by doing:
@@ -28,8 +27,20 @@
 ** customize
    #+begin_src elisp
      (setq maple-note-sort-key '("DATE" . t))
-     (setq maple-note-root-path "~/git/pelican")
-     (setq maple-note-draft-path "content/draft")
+     (setq maple-note-file-match "^[^.]*\\.\\(org\\|md\\|markdown\\)$")
+     (setq maple-note-base-directory "~/Git/pelican/content")
+     (setq maple-note-draft-directory "draft/")
+
+     (setq maple-note-publishing-directory
+           '((org-mode . "org/")
+             (markdow-mode . "markdown/")))
+     ;; check file is a draft
+     (setq maple-note-draft-alist
+           '((t . maple-note-draft)))
+
+     ;; read file and return file's metadata info
+     (setq maple-note-read-alist
+           '((t . maple-note-read)))
    #+end_src
    
 ** keybinds and commands
