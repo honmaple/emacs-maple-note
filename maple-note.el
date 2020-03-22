@@ -211,8 +211,8 @@
                   face maple-note-face
                   follow-link t
                   action (lambda(&optional _) (find-file (tabulated-list-get-id))))
-                `(,(if draft "YES" "NO")
-                  face ,(if draft 'maple-note-face 'font-lock-comment-face)
+                `(,(if draft "NO" "YES")
+                  face ,(if draft 'font-lock-comment-face 'maple-note-face )
                   action (lambda(&optional _) (maple-note-publish-or-unpublish)))
                 `(,category
                   face maple-note-face
