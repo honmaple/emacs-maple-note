@@ -153,8 +153,7 @@
 
 (defun maple-note-abspath (path)
   "Return full absolute path base on PATH."
-  (if (file-name-absolute-p path) path
-    (expand-file-name path maple-note-base-directory)))
+  (let ((default-directory maple-note-base-directory)) (file-truename path)))
 
 (defun maple-note-draft (file)
   "Check FILE is in drafts."
