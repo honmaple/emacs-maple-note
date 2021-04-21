@@ -73,7 +73,7 @@
   :group 'maple-note
   :type '(alist :key-type (symbol) :value-type (string)))
 
-(defcustom maple-note-file-match "^[^.]*\\.\\(org\\|md\\|markdown\\)$"
+(defcustom maple-note-file-match "^.*\\.\\(org\\|md\\|markdown\\)$"
   "Note scan file."
   :group 'maple-note
   :type 'string)
